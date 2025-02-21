@@ -50,6 +50,9 @@ function imagewebp_create_from_any($filepath) {
 
     case 3:
       $im = imagecreatefrompng($filepath);
+      imagepalettetotruecolor($im);
+      imagealphablending($im, true);
+      imagesavealpha($im, true);
       break;
 
     case 6:
@@ -126,8 +129,8 @@ function imagewebp_preprocess_field(&$vars) {
     $formatter_settings = field_formatter_settings_get_instance_display_settings($entity_type, $field_name, $bundle, $view_mode);
     // Make the setting available in the field template.
     $vars['webp_support'] = $formatter_settings['webp_support'];
-    if ($vars['element']['#object']->{'field_image_webp'}['und'][0]['filemime'] == 'image/webp') {
-      $source = $vars['element']['#object']->{'field_image_webp'}['und'][0];
+    if ($vars['element']['#object']->{$field_name}['und'][0]['filemime'] == 'image/webp') {
+      $source = $vars['element']['#object']->{$field_name}['und'][0];
       $keys = array('filename', 'uri', 'filemime');
       foreach ($keys as $key) {
         $vars['element']['#items'][0][$key] = $source[$key];
