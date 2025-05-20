@@ -126,7 +126,7 @@ function imagewebp_preprocess_field(&$vars) {
     $formatter_settings = field_formatter_settings_get_instance_display_settings($entity_type, $field_name, $bundle, $view_mode);
     // Make the setting available in the field template.
     $vars['webp_support'] = $formatter_settings['webp_support'];
-    if ($vars['element']['#object']->{'field_image_webp'}['und'][0]['filemime'] == 'image/webp') {
+    if (isset($vars['element']['#object']) && is_object($vars['element']['#object']) && isset($vars['element']['#object']->field_image_webp['und'][0]['filemime']) && $vars['element']['#object']->field_image_webp['und'][0]['filemime'] === 'image/webp') {
       $source = $vars['element']['#object']->{'field_image_webp'}['und'][0];
       $keys = array('filename', 'uri', 'filemime');
       foreach ($keys as $key) {
